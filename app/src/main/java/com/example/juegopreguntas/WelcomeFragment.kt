@@ -53,4 +53,3 @@ class WelcomeFragment : Fragment() {
         return view
     }
 }
-
