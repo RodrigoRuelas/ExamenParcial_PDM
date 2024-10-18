@@ -16,7 +16,6 @@ class QuestionFragment : Fragment() {
     private lateinit var optionButton3: Button
     private lateinit var optionButton4: Button
 
-    // Variables para los datos de la pregunta
     private var questionText: String? = null
     private var options: List<String>? = null
     private var correctAnswerIndex: Int = 0
@@ -36,7 +35,6 @@ class QuestionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflar el layout del fragmento
         val view = inflater.inflate(R.layout.fragment_question, container, false)
 
         // Inicializar los elementos de la interfaz
@@ -46,19 +44,14 @@ class QuestionFragment : Fragment() {
         optionButton3 = view.findViewById(R.id.option_button_3)
         optionButton4 = view.findViewById(R.id.option_button_4)
 
-        // Cargar los datos de la pregunta
+        // Cargar la pregunta y las opciones
         loadQuestion()
-
-        // Configurar los clics de los botones
-        optionButton1.setOnClickListener { checkAnswer(0) }
-        optionButton2.setOnClickListener { checkAnswer(1) }
-        optionButton3.setOnClickListener { checkAnswer(2) }
-        optionButton4.setOnClickListener { checkAnswer(3) }
 
         return view
     }
 
     private fun loadQuestion() {
+        // Mostrar la pregunta y las opciones
         questionTextView.text = questionText
         options?.let {
             optionButton1.text = it[0]
@@ -66,21 +59,6 @@ class QuestionFragment : Fragment() {
             optionButton3.text = it[2]
             optionButton4.text = it[3]
         }
-    }
-
-    private fun checkAnswer(selectedOption: Int) {
-        if (selectedOption == correctAnswerIndex) {
-            // Respuesta correcta
-        } else {
-            // Respuesta incorrecta
-        }
-
-        // Después de seleccionar una respuesta, reemplazar con el siguiente fragmento
-        val nextQuestionFragment = createQuestionFragment("Próxima pregunta...", listOf("Opc1", "Opc2", "Opc3", "Opc4"), 0)
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, nextQuestionFragment)
-            .addToBackStack(null)
-            .commit()
     }
 
     companion object {
@@ -95,4 +73,5 @@ class QuestionFragment : Fragment() {
         }
     }
 }
+
 

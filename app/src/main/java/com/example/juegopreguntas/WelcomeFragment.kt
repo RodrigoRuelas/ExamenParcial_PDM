@@ -34,13 +34,18 @@ class WelcomeFragment : Fragment() {
                 errorTextView.visibility = View.VISIBLE
             } else {
                 errorTextView.visibility = View.GONE
-                // Reemplazar WelcomeFragment con QuestionFragment
-                val questionFragment = QuestionFragment()
+
+                // Crear una instancia del QuestionFragment con una pregunta específica
+                val firstQuestionFragment = QuestionFragment.createQuestionFragment(
+                    "¿Cuál es la capital de Francia?",
+                    listOf("París", "Londres", "Berlín", "Madrid"),
+                    0 // Índice de la respuesta correcta (París)
+                )
 
                 // Usar el FragmentManager para realizar la transacción
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, questionFragment)
-                    .addToBackStack(null) // Opcional, si quieres permitir volver atrás
+                    .replace(R.id.fragment_container, firstQuestionFragment)
+                    .addToBackStack(null) // Permite regresar a WelcomeFragment si es necesario
                     .commit()
             }
         }
@@ -48,3 +53,4 @@ class WelcomeFragment : Fragment() {
         return view
     }
 }
+

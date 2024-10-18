@@ -5,36 +5,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#abf086">
 
     <TextView
         android:id="@+id/question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_marginBottom="24dp" />
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="¿Cual es la capital del Tahuantinsuyo?" />
 
     <Button
         android:id="@+id/option_button_1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:backgroundTint="#f7f374"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:text="Cusco" />
 
     <Button
         android:id="@+id/option_button_2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:backgroundTint="#f7f374"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:text="Lima" />
 
     <Button
         android:id="@+id/option_button_3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:backgroundTint="#f7f374"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:text="Arequipa" />
 
     <Button
         android:id="@+id/option_button_4"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:backgroundTint="#f7f374"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:text="Tacna" />
 </LinearLayout>
+
