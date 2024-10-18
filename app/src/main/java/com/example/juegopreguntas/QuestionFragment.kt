@@ -47,6 +47,12 @@ class QuestionFragment : Fragment() {
         // Cargar la pregunta y las opciones
         loadQuestion()
 
+        // Configurar la lógica de los botones de opciones
+        optionButton1.setOnClickListener { checkAnswer(0) }
+        optionButton2.setOnClickListener { checkAnswer(1) }
+        optionButton3.setOnClickListener { checkAnswer(2) }
+        optionButton4.setOnClickListener { checkAnswer(3) }
+
         return view
     }
 
@@ -61,6 +67,19 @@ class QuestionFragment : Fragment() {
         }
     }
 
+    private fun checkAnswer(selectedIndex: Int) {
+        val isCorrect = selectedIndex == correctAnswerIndex
+        val correctAnswer = options?.get(correctAnswerIndex)
+
+        // Navegar a AnswerFragment con los resultados
+        val answerFragment = AnswerFragment.createAnswerFragment(isCorrect, correctAnswer)
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, answerFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     companion object {
         fun createQuestionFragment(question: String, options: List<String>, correctAnswerIndex: Int): QuestionFragment {
             val fragment = QuestionFragment()
@@ -73,5 +92,6 @@ class QuestionFragment : Fragment() {
         }
     }
 }
+
 
 
