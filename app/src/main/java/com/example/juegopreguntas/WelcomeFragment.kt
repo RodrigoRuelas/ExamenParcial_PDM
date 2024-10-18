@@ -33,13 +33,15 @@ class WelcomeFragment : Fragment() {
                 errorTextView.text = "Por favor, ingresa tu nombre para comenzar el juego."
                 errorTextView.visibility = View.VISIBLE
             } else {
-                // Ocultar el mensaje de error si todo está bien y continuar con el juego
                 errorTextView.visibility = View.GONE
+                // Reemplazar WelcomeFragment con QuestionFragment
+                val questionFragment = QuestionFragment()
 
-                // Iniciar el juego llamando a MainActivity
-                val intent = Intent(requireActivity(), MainActivity::class.java)
-                intent.putExtra("PLAYER_NAME", playerName)
-                startActivity(intent)
+                // Usar el FragmentManager para realizar la transacción
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, questionFragment)
+                    .addToBackStack(null) // Opcional, si quieres permitir volver atrás
+                    .commit()
             }
         }
 
