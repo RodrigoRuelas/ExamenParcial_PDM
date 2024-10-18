@@ -5,24 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 
 class AnswerFragment : Fragment() {
 
-    private lateinit var feedbackTextView: TextView
-
-    private var isCorrect: Boolean = false
-    private var correctAnswer: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Obtener los datos del Bundle
-        arguments?.let {
-            isCorrect = it.getBoolean("is_correct")
-            correctAnswer = it.getString("correct_answer")
-        }
-    }
+    private lateinit var resultTextView: TextView
+    private lateinit var nextButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,17 +19,42 @@ class AnswerFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_answer, container, false)
 
-        // Inicializar las vistas
-        feedbackTextView = view.findViewById(R.id.feedback_text_view)
+        resultTextView = view.findViewById(R.id.feedback_text_view)
+        nextButton = view.findViewById(R.id.next_button)
 
-        // Mostrar el mensaje de retroalimentación
-        if (isCorrect) {
-            feedbackTextView.text = "¡Felicidades! Respuesta correcta."
+        // Obtener los argumentos de la pregunta
+        val isCorrect = arguments?.getBoolean("is_correct") ?: false
+        val correctAnswer = arguments?.getString("correct_answer")
+
+        // Mostrar el resultado
+        resultTextView.text = if (isCorrect) {
+            "¡Felicitaciones! Respuesta correcta."
         } else {
-            feedbackTextView.text = "Te equivocaste. La respuesta correcta es: $correctAnswer"
+            "Te equivocaste. La respuesta correcta es: $correctAnswer"
+        }
+
+        // Configurar el botón "Siguiente"
+        nextButton.setOnClickListener {
+            // Aquí puedes cargar el siguiente QuestionFragment
+            loadNextQuestion()
         }
 
         return view
+    }
+
+    private fun loadNextQuestion() {
+        // Crear la siguiente pregunta
+        val nextQuestionFragment = QuestionFragment1.createQuestionFragment(
+            "¿Cuál es la capital de Italia?", // Nueva pregunta
+            listOf("Roma", "Milán", "Nápoles", "Turín"), // Opciones
+            0 // Índice de la respuesta correcta
+        )
+
+        // Usar el FragmentManager para realizar la transacción
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, nextQuestionFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {
