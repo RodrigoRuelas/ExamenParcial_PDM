@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:hint="Nombre del jugador"
         android:textColor="@android:color/white"
-        android:hintTextColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
         android:backgroundTint="@android:color/white" />
 
     <!-- Texto de error -->
@@ -57,7 +57,7 @@
         android:id="@+id/error_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_light"
+        android:textColor="@android:color/black"
         android:text=""
         android:visibility="gone"
         android:layout_marginTop="8dp"/>

@@ -1,11 +1,14 @@
 package com.example.juegopreguntas
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 
 class WelcomeFragment : Fragment() {
 
@@ -34,7 +37,7 @@ class WelcomeFragment : Fragment() {
                 errorTextView.visibility = View.GONE
 
                 // Iniciar el juego llamando a MainActivity
-                val intent = Intent(activity, MainActivity::class.java)
+                val intent = Intent(requireActivity(), MainActivity::class.java)
                 intent.putExtra("PLAYER_NAME", playerName)
                 startActivity(intent)
             }
