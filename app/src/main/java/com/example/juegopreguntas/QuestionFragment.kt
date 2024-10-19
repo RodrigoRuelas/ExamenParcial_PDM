@@ -18,9 +18,16 @@ class QuestionFragment : Fragment() {
 
     private var questionIndex: Int = 0
     private var questions: List<Question> = listOf(
-        Question("¿Cuál es la capital de Francia?", listOf("París", "Londres", "Berlín", "Madrid"), 0),
-        Question("¿Cuál es la capital de España?", listOf("Madrid", "Barcelona", "Sevilla", "Valencia"), 0)
-        // Agrega más preguntas aquí
+        Question("1. ¿En qué año se declaró la independencia de Perú?", listOf("1942", "1821", "1825", "1830"), 1),
+        Question("2. ¿Cuál es la capital de Perú?", listOf("Arequipa", "Cusco", "Lima", "Tacna"), 2),
+        Question("3. ¿Qué sitio arqueológico es considerado una de las siete maravillas del mundo moderno en Perú?", listOf("Machu Picchu", "Ciudad Sagrada de Caral", "Valle Sagrado de los Incas", "Templo del Sol Coricancha"), 0),
+        Question("4. ¿Cuál es el río más largo de Perú?", listOf("Rio Chili", "Río Ucayali", "Rio Amazonas", "Rio Marañon"), 1),
+        Question("5. ¿En qué región geográfica del país se encuentra Machu Picchu?", listOf("Cuy chactado", "Causa peruana", "Ceviche", "Soltero de queso"), 2),
+        Question("6. Unos de los idiomas oficiales del Peru es ... ", listOf("Shipibe", "Quechua", "Yine", "Chapra"), 1),
+        Question("7. ¿Cuál es la montaña más alta de Perú?", listOf("Alpamayo", "Coropuna", "Huayna Picchu", "Huascarán"), 3),
+        Question("8. ¿Quién fue el primer virrey del Perú?", listOf("Diego López de Zúñiga y Velasco", "Francisco de Toledo", "Blasco Núñez de Vela", "Antonio de Mendoza"), 2),
+        Question("9. ¿Cómo se llama la bebida alcohólica tradicional de Perú?", listOf("Pisco", "Anis", "Vino", "Ron"), 0),
+        Question("10. ¿En qué año se fundó la ciudad de Lima?", listOf("28 de julio de 1535", "15 de agosto de 1535", "18 de enero de 1535", "6 de abril de 1535"), 2),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
