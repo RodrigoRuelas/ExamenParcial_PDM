@@ -16,18 +16,19 @@ class QuestionFragment : Fragment() {
     private lateinit var optionButton3: Button
     private lateinit var optionButton4: Button
 
-    private var questionText: String? = null
-    private var options: List<String>? = null
-    private var correctAnswerIndex: Int = 0
+    private var questionIndex: Int = 0
+    private var questions: List<Question> = listOf(
+        Question("¿Cuál es la capital de Francia?", listOf("París", "Londres", "Berlín", "Madrid"), 0),
+        Question("¿Cuál es la capital de España?", listOf("Madrid", "Barcelona", "Sevilla", "Valencia"), 0)
+        // Agrega más preguntas aquí
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Obtener los datos de la pregunta del Bundle
+        // Obtener el índice actual de la pregunta del Bundle
         arguments?.let {
-            questionText = it.getString("question_text")
-            options = it.getStringArrayList("options")
-            correctAnswerIndex = it.getInt("correct_answer_index")
+            questionIndex = it.getInt("question_index", 0)
         }
     }
 
@@ -37,14 +38,14 @@ class QuestionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_question, container, false)
 
-        // Inicializar los elementos de la interfaz
+        // Inicializar las vistas
         questionTextView = view.findViewById(R.id.question_text_view)
         optionButton1 = view.findViewById(R.id.option_button_1)
         optionButton2 = view.findViewById(R.id.option_button_2)
         optionButton3 = view.findViewById(R.id.option_button_3)
         optionButton4 = view.findViewById(R.id.option_button_4)
 
-        // Cargar la pregunta y las opciones
+        // Cargar la pregunta actual
         loadQuestion()
 
         // Configurar la lógica de los botones de opciones
@@ -57,23 +58,20 @@ class QuestionFragment : Fragment() {
     }
 
     private fun loadQuestion() {
-        // Mostrar la pregunta y las opciones
-        questionTextView.text = questionText
-        options?.let {
-            optionButton1.text = it[0]
-            optionButton2.text = it[1]
-            optionButton3.text = it[2]
-            optionButton4.text = it[3]
-        }
+        val currentQuestion = questions[questionIndex]
+        questionTextView.text = currentQuestion.text
+        optionButton1.text = currentQuestion.options[0]
+        optionButton2.text = currentQuestion.options[1]
+        optionButton3.text = currentQuestion.options[2]
+        optionButton4.text = currentQuestion.options[3]
     }
 
     private fun checkAnswer(selectedIndex: Int) {
-        val isCorrect = selectedIndex == correctAnswerIndex
-        val correctAnswer = options?.get(correctAnswerIndex)
+        val isCorrect = selectedIndex == questions[questionIndex].correctAnswerIndex
+        val correctAnswer = questions[questionIndex].options[questions[questionIndex].correctAnswerIndex]
 
         // Navegar a AnswerFragment con los resultados
-        val answerFragment = AnswerFragment.createAnswerFragment(isCorrect, correctAnswer)
-
+        val answerFragment = AnswerFragment.createAnswerFragment(isCorrect, correctAnswer, questionIndex)
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, answerFragment)
             .addToBackStack(null)
@@ -81,17 +79,14 @@ class QuestionFragment : Fragment() {
     }
 
     companion object {
-        fun createQuestionFragment(question: String, options: List<String>, correctAnswerIndex: Int): QuestionFragment {
+        fun createQuestionFragment(questionIndex: Int): QuestionFragment {
             val fragment = QuestionFragment()
             val args = Bundle()
-            args.putString("question_text", question)
-            args.putStringArrayList("options", ArrayList(options))
-            args.putInt("correct_answer_index", correctAnswerIndex)
+            args.putInt("question_index", questionIndex)
             fragment.arguments = args
             return fragment
         }
     }
 }
-
 
 

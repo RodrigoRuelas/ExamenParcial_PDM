@@ -1,17 +1,31 @@
 package com.example.juegopreguntas
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 
 class AnswerFragment : Fragment() {
 
-    private lateinit var resultTextView: TextView
+    private lateinit var feedbackTextView: TextView
     private lateinit var nextButton: Button
+    private var isCorrect: Boolean = false
+    private var correctAnswer: String? = null
+    private var questionIndex: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Obtener los datos del Bundle
+        arguments?.let {
+            isCorrect = it.getBoolean("is_correct")
+            correctAnswer = it.getString("correct_answer")
+            questionIndex = it.getInt("question_index")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,50 +33,38 @@ class AnswerFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_answer, container, false)
 
-        resultTextView = view.findViewById(R.id.feedback_text_view)
+        // Inicializar las vistas
+        feedbackTextView = view.findViewById(R.id.feedback_text_view)
         nextButton = view.findViewById(R.id.next_button)
 
-        // Obtener los argumentos de la pregunta
-        val isCorrect = arguments?.getBoolean("is_correct") ?: false
-        val correctAnswer = arguments?.getString("correct_answer")
-
-        // Mostrar el resultado
-        resultTextView.text = if (isCorrect) {
-            "¡Felicitaciones! Respuesta correcta."
+        // Mostrar el mensaje de retroalimentación
+        if (isCorrect) {
+            feedbackTextView.text = "¡Felicidades! Respuesta correcta."
         } else {
-            "Te equivocaste. La respuesta correcta es: $correctAnswer"
+            feedbackTextView.text = "Te equivocaste. La respuesta correcta es: $correctAnswer"
         }
 
-        // Configurar el botón "Siguiente"
+        // Configurar el botón "Siguiente" para cargar la siguiente pregunta
         nextButton.setOnClickListener {
-            // Aquí puedes cargar el siguiente QuestionFragment
-            loadNextQuestion()
+            val nextQuestionIndex = questionIndex + 1
+            val nextQuestionFragment = QuestionFragment.createQuestionFragment(nextQuestionIndex)
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, nextQuestionFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         return view
     }
 
-    private fun loadNextQuestion() {
-        // Crear la siguiente pregunta
-        val nextQuestionFragment = QuestionFragment1.createQuestionFragment(
-            "¿Cuál es la capital de Italia?", // Nueva pregunta
-            listOf("Roma", "Milán", "Nápoles", "Turín"), // Opciones
-            0 // Índice de la respuesta correcta
-        )
-
-        // Usar el FragmentManager para realizar la transacción
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, nextQuestionFragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
     companion object {
-        fun createAnswerFragment(isCorrect: Boolean, correctAnswer: String?): AnswerFragment {
+        fun createAnswerFragment(isCorrect: Boolean, correctAnswer: String?, questionIndex: Int): AnswerFragment {
             val fragment = AnswerFragment()
             val args = Bundle()
             args.putBoolean("is_correct", isCorrect)
             args.putString("correct_answer", correctAnswer)
+            args.putInt("question_index", questionIndex)
             fragment.arguments = args
             return fragment
         }
